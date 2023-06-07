@@ -1,0 +1,7 @@
+LeHavre(5;2)	Rouen(5;2)	Paris(10;7)	Annecy(6;9)	Lille(2;12)	Toulouse(49;3)
+LHRn	LeHavre	Rouen	5
+LHTls	LeHavre	Toulouse
+PrTls	Paris	Toulouse	13
+PrLH	Paris	LeHavre
+PrAnn	Paris	Annecy
+LlRn	Lille	Rouen

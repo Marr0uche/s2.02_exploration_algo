@@ -1,0 +1,12 @@
+NombreArrete
+Sommet1(5;2)	Sommet2(5;2)	Sommet3(10;7)	SommetN(6;9)
+NomArrete1	Sommet1	Sommet2
+NomArrete2	Sommet3	SommetN
+NomSousGraphe	Sommet1
+NomSousGraphe2	Sommet2	Sommet3
+NomSousGraphe3	SommetN
+
+(-,5,-,-)
+(-,-,3,-)
+(-,-,-,13)
+(2,-,-,-)
