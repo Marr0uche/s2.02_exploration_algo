@@ -31,9 +31,9 @@ public class FrameGraphe extends JFrame
 	/*--Constructeur--*/
 	/*----------------*/
 
-	/**
-	 * @param ctrl
-	 * Constructuer de FrameGraphe qui crée un panelGraphe et panelAction
+	/** Constructuer de FrameGraphe qui crée un panelGraphe et panelAction
+	 * @param ctrl le controleur
+	 * 
 	 */
 	public FrameGraphe ( Controleur ctrl )
 	{
@@ -60,19 +60,18 @@ public class FrameGraphe extends JFrame
 		this.setVisible ( true );
 	}
 
-	/**
-	 * @return Arc
-	 * returns l'arc à colorier
+	/** Getteur qui retourne l'arc à colorier
+	 * @return l'arc à colorier
 	 */
 	public Arc     getArcAColorier ( ) { return this.panelGraph.getArcAColorier ( ); }
 	
-	/**
+	/** Getteur qui retourne si le panel est sélectionné
 	 * @return true si le panel est sélectionné
 	 */
 	public boolean estSelectionne  ( ) { return this.panelGraph.estSelectionne  ( ); }
 	
-	/**
-	 * Appel la méthode resetSelect de PanelGraph
+	/** Appel la méthode resetSelect de PanelGraph
+	 * 
 	 */
 	public void    resetSelect     ( ) {        this.panelGraph.resetSelect     ( ); }
 }

@@ -34,14 +34,14 @@ public class PanelAction extends JPanel implements ActionListener,KeyListener
 	/*----------------*/
 	/*--Constructeur--*/
 	/*----------------*/
-	/**
+
+	/** Constructeur de PanelAction ou il ajoute le bouton colorier
 	 * @param ctrl  controleur
 	 * @param frame frame graphe
-	 * Constructeur de PanelAction ou il ajoute le bouton colorier
+	 * 
 	 */
-	public PanelAction(Controleur ctrl,FrameGraphe frame)
+	public PanelAction ( Controleur ctrl, FrameGraphe frame )
 	{
-
 		this.ctrl = ctrl;
 		this.frame = frame;
 		
@@ -64,43 +64,41 @@ public class PanelAction extends JPanel implements ActionListener,KeyListener
 	}
 
 	/* KeyListener */ 
-	public void keyTyped(KeyEvent e)
+	public void keyTyped ( KeyEvent e )
 	{
-		if (e.getKeyCode() == KeyEvent.VK_SPACE)
-		{
-			this.tester();
-		}
+		if ( e.getKeyCode ( ) == KeyEvent.VK_SPACE )
+			this.tester ( );
 	}
 
 	/**
 	 * Test pour voir si un arc est selectionnée et si on peut colorier 
 	 */
-	public void tester()
+	public void tester ( )
 	{
 		Color couleurJoueur   = this.ctrl .getCouleurJouer ( );
 		Arc   arcAColorier    = this.frame.getArcAColorier ( );
 
 		if ( this.frame.estSelectionne ( ) && this.ctrl.colorier ( arcAColorier,couleurJoueur ) )
 		{
-			if(!this.ctrl.augmenterTours()) //Si on a fini toutes les manches
+			if( !this.ctrl.augmenterTours ( ) ) //Si on a fini toutes les manches
 			{
 				String sRet = "";
 
-				sRet += "Nb regions visitées : " + this.ctrl.getNbRegionsVisite() + "\n";
-				sRet += "Nb arcs colorées    : " + this.ctrl.getNbArcsColorie()   + "\n";
-				sRet += "Nb Points Total     : " + this.ctrl.calculPoints();
+				sRet += "Nb regions visitées : " + this.ctrl.getNbRegionsVisite ( ) + "\n";
+				sRet += "Nb arcs colorées    : " + this.ctrl.getNbArcsColorie   ( ) + "\n";
+				sRet += "Nb Points Total     : " + this.ctrl.calculPoints       ( );
 
 				//Création d'une "Pop-up" pour demander si le joueur veux rejouer ou quitter
-				Object[] choix={"Rejouer","Quitter"};
-				int rep = JOptionPane.showOptionDialog(this.frame,sRet, "Game End", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, choix, choix[0]);
+				Object[] choix= { "Rejouer","Quitter" };
+				int rep = JOptionPane.showOptionDialog ( this.frame,sRet, "Game End", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, choix, choix[0] );
 
-				if (rep == 0 ) //Si Rejouer est sélectionné
+				if ( rep == 0 ) //Si Rejouer est sélectionné
 				{
-					this.frame.dispose();	//On ferme le fenêtre
-					new Controleur();		//On relance une partie
+					this.frame.dispose ( );	//On ferme le fenêtre
+					new Controleur ( );		//On relance une partie
 				}
 				else
-					System.exit(1);			//On ferme le scripte
+					System.exit ( 1 );			//On ferme le scripte
 			}
 		}
 		else

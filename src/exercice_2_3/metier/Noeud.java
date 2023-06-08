@@ -42,32 +42,40 @@ public class Noeud
 	/* -------------------------------------- */
 
 
-	/** * @return nom */
+	/** Getteur qui retourne le nom du noeud
+	 * @return nom */
 	public String    getNom        ( ) { return this.nom;             }
 
-	/** * @return x */
+	/** Getteur qui retourne la position sur x du noeud
+	 * @return x */
 	public int       getX          ( ) { return this.x  ;             }
 
-	/** * @return y */
+	/** Getteur qui retourne la position sur y du noeud
+	 * @return y */
 	public int       getY          ( ) { return this.y  ;             }
 
-	/** * @return region */
+	/** Getteur qui retourne la region du noeud
+	 *  @return region */
 	public int       getRegion     ( ) { return this.rgn ;            }
 
-	/** * @return liste des arcs */
+	/** Getteur qui retourne la liste des arcs du noeud
+	 *  @return liste des arcs */
 	public List<Arc> getLstArc     ( ) { return this.lstArc ;         }
 
-	/** * @return true si le noeud est visite */
+	/** Getteur qui retourne si le noeud a été visite
+	 *  @return true si le noeud est visite */
 	public boolean   getEstVisite  ( ) { return this.estVisite;       }
 
 	/* -------------------------------------- */
 	/*                 Setteur                */
 	/* -------------------------------------- */
 
-	/** * @param rgn region du noeud */
+	/** Setteur qui permet de modifier la region du noeud
+	 * @param rgn region du noeud */
 	public void setRegion     ( int rgn ) { this.rgn = rgn;        }
 
-	/** * passe a vrai la visite du noeud */
+	/** Setteur qui permet d'indiquer que le noeud a été visité
+	 * * passe a vrai la visite du noeud */
 	public void setEstVisite  (         ) { this.estVisite = true; }
 
 	/* -------------------------------------- */
@@ -79,8 +87,6 @@ public class Noeud
 	 */
 	public void ajouterArc ( Arc a ) { this.lstArc.add ( a ); }
 	
-
-
 	/** 
 	 * Retourne, la position sur x et y du noeud
 	*/

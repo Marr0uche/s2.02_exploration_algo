@@ -17,6 +17,8 @@ public class Controleur
 	private	FrameGraphe ihm;
 	private Manche      manche;
 
+	/** Contructeur qui initialise le jeu
+	 */
 	public Controleur ( )
 	{
 		this.manche = new Manche      (      );
@@ -31,17 +33,51 @@ public class Controleur
 		new Controleur ( );
 	}
 
+	/** Getteur qui retourne la liste des arcsde la partie métier
+	 * @return la liste des arcs de la partie métier
+	 */
 	public List<Arc>   getArcs    ( ) { return this.metier.getArcs    ( ); }
+
+	/** Getteur qui retourne la liste des noeuds de la partie métier
+	 * @return la liste des noeuds de la partie métier
+	 */
 	public List<Noeud> getNoeuds  ( ) { return this.metier.getNoeuds  ( ); }
+
+	/** Getteur qui retourne la couleur du joueur en cours
+	 * @return couleur du joueur en cours
+	 */
 	public Color       getCouleur ( ) { return this.manche.getCouleur ( ); }
+
+	/** Getteur qui retourne le nombre de tour
+	 * @return nombre de tour
+	 */
 	public int         getNbTours ( ) { return Manche.getNbTour       ( ); }
+
+	/** Getteur qui retourne la partie métier
+	 * @return partie métier
+	 */
 	public GrapheT     getMetier  ( ) { return this.metier;                }
 
+	/** Getteur qui retourne le nombre de régions visitées
+	 * @return nombre de régions visitées
+	 */
 	public int   getNbRegionsVisite ( ) { return this.metier.getRegionvisite ( ).size ( ); }
+	
+	/** Getteur qui retourne le nombre d'arcs coloriés
+	 * @return nombre d'arcs coloriés
+	 */
 	public int   getNbArcsColorie   ( ) { return this.metier.getNbArcsColorie ( );         }
 
+	/** Getteur qui indique la couleur du joueur actuel
+	 * @return color (couleur du joueur actuel)
+	 */
 	public Color getCouleurJouer ( ) { return this.manche.getCouleur ( ); }
 
+	/** Méthode qui retour l'arc entre deux noeuds
+	 * @param n1 noeud 1
+	 * @param n2 noeud 2
+	 * @return l'arc entre les deux noeuds
+	 */
 	public Arc     arcEntre ( Noeud n1, Noeud n2 )     { return this.metier.arcEntre ( n1,n2 ); }
 
 	/** Méthode qui permet de colorier un arc en faisant le lien entre l'IHM et le métier

@@ -36,12 +36,12 @@ public class Arc
 	}
 
 
-	/**
-	 * Constructeur arc
+	/** Constructeur arc
 	 * 
 	 * @param nom     nom de l'arc
 	 * @param depart  le noeud de départ de l'arc
 	 * @param arriver le noeud d'arriver de l'arc
+	 * @return retourne l'arc que l'on a créé
 	 */
 
 	private Arc ( String nom, Noeud depart, Noeud arriver )
@@ -55,6 +55,7 @@ public class Arc
 	 * @param depart  noeud de départ de l'arc
 	 * @param arriver noeud d'arriver de l'arc
 	 * @param valeur score de l'arc
+	 * @return l'arc que l'on a créé
 	 */
 	public static Arc creerArc ( String nom, Noeud depart, Noeud arriver, int valeur )
 	{
@@ -69,6 +70,7 @@ public class Arc
 	 * @param nom nom de l'arc
 	 * @param depart noeud de depart de l'arc
 	 * @param arriver noeud d'arriver de l'arc
+	 * @return l'arc que l'on a créé
 	 */
 
 	public static Arc creerArc ( String nom, Noeud depart, Noeud arriver ) 
@@ -82,38 +84,48 @@ public class Arc
 	/*                Accesseur               */
 	/* -------------------------------------- */
 	
-	/** * @return score */
+	/** Getteur qui permet de récupérer la valeur de l'arc
+	 * @return score */
 	public int     getValeur     ( ) { return this.valeur;          }
 
-	/** * @return noeud de départ */
+	/** Getteur qui permet de récupérer le noeud de départ de l'arc
+	 * @return noeud de départ */
 	public Noeud   getNoeudD     ( ) { return this.depart;          }
 
-	/** * @return noeud d'arrivée */
+	/** Getteur qui permet de récupérer le noeud d'arrivée de l'arc
+	 * @return noeud d'arrivée */
 	public Noeud   getNoeudA     ( ) { return this.arriver;         }
 
-	/** * @return true si l'arc est colorie */
+	/** Getteur qui permet de savoir si l'arc est colorié
+	 * @return true si l'arc est colorie */
 	public boolean getEstColorie ( ) { return this.couleur != null; }
 
-	/** * @return couleur de l'arc */
+	/** Getteur qui permet de récupérer la couleur de l'arc
+	 *  @return couleur de l'arc */
 	public Color   getColorArc   ( ) { return this.couleur;         }
 
-	/** * @return nom de l'arc */
+	/** Getteur qui permet de récupérer le nom de l'arc
+	 * @return nom de l'arc */
 	public String  getNom        ( ) { return this.nom;             }
 
 	/* -------------------------------------- */
 	/*                Setteur                 */
 	/* -------------------------------------- */
 
-	/** * @param valeur change la valeur de l'arc */
+	/** Setteur qui permet de changer la valeur de l'arc
+	 * @param valeur  valeur de l'arc */
 	public void   setValeur  ( int valeur ) { this.valeur  =  valeur; }
 
-	/** * @param n change le noeud de départ de l'arc */
+	/** Setteur qui permet de changer le noeud de départ de l'arc
+	 * @param n noeud de départ de l'arc */
 	public void   setNoeudD  ( Noeud n    ) { this.depart  = n;       }
 
-	/** * @param n change le noeud d'arriver de l'arc */
+	/** Setteur qui permet de changer le noeud d'arriver de l'arc
+	 * @param n noeud d'arriver de l'arc */
 	public void   setNoeudA  ( Noeud n    ) { this.arriver = n;       }
 
-	/** * @param coul change la couleur de l'arc */
+	/** Setteur qui permet de colorier l'arc
+	 * @param coul couleur de l'arc */
 	public void   setColorie ( Color coul ) { this.couleur = coul;    }
 
 	/* -------------------------------------- */

@@ -16,50 +16,50 @@ import metier.*;
 public class PanelGraph extends JPanel implements MouseListener 
 {
 
-	/**
-	 *Un tableau de Couleurs pour colorier les regions
+	/** Un tableau de Couleurs pour colorier les regions
+	 *
 	 */
 	private Color[] couleurs = {Color.BLACK,Color.BLUE,Color.GRAY,Color.GREEN,Color.MAGENTA,Color.ORANGE,Color.YELLOW,Color.RED,Color.PINK}; 
 
-	/**
-	 * Un Controleur pour pouvoir accéder au controleur
+	/** Un Controleur pour pouvoir accéder au controleur
+	 * 
 	 */
 	private Controleur  ctrl;
 
-	/**
-	 * Notre liste d'arcs présents dans notre graph 
+	/** Notre liste d'arcs présents dans notre graph 
+	 * 
 	 */
 	private List<Arc>   lstArc;
 
-	/**
-	 * Notre liste de noeuds présents dans notre graph 
+	/** Notre liste de noeuds présents dans notre graph 
+	 * 
 	 */
 	private List<Noeud> lstNoeud;
 
-	/**
-	 * Le premier noeud seléctionné
+	/**Le premier noeud seléctionné
+	 * 
 	 */
 	private Noeud actif1;
 
-	/**
-	 * Le deuxième noeud seléctionné
+	/**Le deuxième noeud seléctionné
+	 * 
 	 */
 	private Noeud actif2;
 
 
-	/**
-	 * Un boolean pour dire si il y avait un arc seléctionné ou pas 
+	/**Un boolean pour dire si il y avait un arc seléctionné ou pas 
+	 * 
 	 */
 	private boolean selectionne;
 
 	/**
-	 * Le arc a colorier
+	 * L'arc a colorier
 	 */
 	private Arc arcAColorier;
 
-	/**
-	 * @param ctrl
-	 * Constructeur de PanelGraph
+	/** Constructeur de PanelGraph
+	 * @param ctrl de type Controleur
+	 * 
 	 */
 	public PanelGraph ( Controleur ctrl )
 	{
@@ -95,9 +95,8 @@ public class PanelGraph extends JPanel implements MouseListener
 		this.dessinerArcSelectionne ( g2 );
 	}
 
-	/**
-	 * @param g2
-	 * Dessine les arcs de la liste
+	/** Méthode qui dessine les arcs de la liste
+	 * @param g2 de type Graphics2D
 	 */
 	private void dessinerArcs ( Graphics2D g2 )
 	{
@@ -128,9 +127,9 @@ public class PanelGraph extends JPanel implements MouseListener
 		}
 	}
 
-	/**
-	 * @param g2
-	 * Desinner tous les noeuds de la liste
+	/** Méthode qui dessine les noeuds de la liste
+	 * @param g2 de type Graphics2D
+	 * 
 	 */
 	private void dessinerNoeuds ( Graphics2D g2 )
 	{
@@ -141,9 +140,9 @@ public class PanelGraph extends JPanel implements MouseListener
 		
 	}
 
-	/**
-	 * @param g2
-	 * Desinner les noeuds actifs en rouge
+	/** Méthode qui dessine les noeuds actifs en rouge
+	 * @param g2 de type Graphics2D
+	 * 
 	 */
 	private void dessinerNoeudsActifs ( Graphics2D g2 )
 	{
@@ -151,11 +150,11 @@ public class PanelGraph extends JPanel implements MouseListener
 		dessinerNoeud ( g2, actif2, Color.RED );
 	}
 
-	/**
-	 * @param g2
-	 * @param node
-	 * @param color
-	 * Desinne un noeud
+	/** Méthode qui dessine un noeud
+	 * @param g2 de type Graphics2D
+	 * @param node noeud à dessiner
+	 * @param color couleur du noeud
+	 * 
 	 */
 	private void dessinerNoeud ( Graphics2D g2, Noeud node, Color color )
 	{
@@ -164,9 +163,9 @@ public class PanelGraph extends JPanel implements MouseListener
 		
 	}
 
-	/**
-	 * @param g2
-	 * Dessine l'arc qui est selectionne et le mets en rouge 
+	/** Méthode qui dessine l'arc sélectionné en rouge
+	 * @param g2 de type Graphics2D
+	 * 
 	 */
 	private void dessinerArcSelectionne(Graphics2D g2) 
 	{
@@ -194,8 +193,8 @@ public class PanelGraph extends JPanel implements MouseListener
 		}
 	}
 
-	/**
-	 * Enlève la sélection des noeuds et de l'arète
+	/** Méthode qui reset les noeuds sélectionnés (sélection)
+	 * @param g2 de type Graphics2D
 	 */
 	public void reset(Graphics2D g2) 
 	{
@@ -214,8 +213,8 @@ public class PanelGraph extends JPanel implements MouseListener
 		});
 	}
 
-	/**
-	 * Reset les noeuds sélectionnés
+	/** Reset les noeuds sélectionnés
+	 * 
 	 */
 	public void resetSelect() 
 	{
@@ -224,14 +223,14 @@ public class PanelGraph extends JPanel implements MouseListener
 		repaint();
 	}
 
-	/**
-	 * @param g2
-	 * @param x
-	 * @param y
-	 * @param coulFond
-	 * @param coulTour
+	/** Méthode pour dessiner nos noeuds
+	 * @param g2 de type Graphics2D
+	 * @param x coordonnée x du noeud
+	 * @param y coordonnée y du noeud
+	 * @param coulFond couleur de fond du noeud
+	 * @param coulTour couleur du tour du noeud
 	 * 
-	 * Méthode pour dessiner nos noeuds
+	 * 
 	 */
 	public void dessinerOval(Graphics2D g2, int x, int y, Color coulFond, Color coulTour) 
 	{
@@ -241,18 +240,18 @@ public class PanelGraph extends JPanel implements MouseListener
 		g2.drawOval(x - 4, y - 104, 10, 10);
 	}
 
-	/**
-	 * @return boolean
-	 * return vrai si il y aun arc selectionné
+	/** Métode qui permet de savoir si un arc est sélectionné
+	 * @return return vrai si il y aun arc selectionné
+	 * 
 	 */
 	public boolean estSelectionne() 
 	{
 		return selectionne;
 	}
 
-	/**
-	 * @return Arc
-	 * Returns le arc qui est selectionnée pour colorier
+	/** Méthode qui permet de récupérer l'arc sélectionné
+	 * @return Arc sélectionné
+	 * 
 	 */
 	public Arc getArcAColorier() 
 	{
