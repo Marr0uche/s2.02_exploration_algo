@@ -9,17 +9,72 @@ import java.io.FileInputStream;
 
 public class GrapheT
 {
-	private List<Noeud>  lstNoeuds;
-	private List<Arc>    lstArc;
+	/* -------------------------------------- */
+	/*               Attributs                */
+	/* -------------------------------------- */
+	
+	private List<Noeud>   lstNoeuds;
+	private List<Arc>     lstArc;
+	private List<Integer> tabRegionVisite;
+	
+	/* -------------------------------------- */
+	/*              Constructeur              */
+	/* -------------------------------------- */
 
+	/** Constructeur initialisant le graphe. 
+	 * 
+	 */
 	public GrapheT ( )
 	{
-		this.lstNoeuds = new ArrayList<> ( );
-		this.lstArc    = new ArrayList<> ( );
+		this.lstNoeuds       = new ArrayList<> ( );
+		this.lstArc          = new ArrayList<> ( );
+		this.tabRegionVisite = new ArrayList<> ( );
 
 		this.genererGraphe ( );
 	}
 
+	/* -------------------------------------- */
+	/*                Accesseur               */
+	/* -------------------------------------- */
+
+	/**
+	 * @return le nombre de région visitée
+	 */
+	public List<Integer> getRegionvisite  ( ) { return this.tabRegionVisite; }
+	/**
+	 * @return le nombre d'arc.
+	 */
+	public List<Arc>     getArcs          ( ) { return this.lstArc;          }
+	/**
+	 * @return le nombre de noeud.
+	 */
+	public List<Noeud>   getNoeuds        ( ) { return this.lstNoeuds;       }
+
+	/** Méthode qui retourne le nombre d'arc colorié.
+	 * @return int (le nombre d'arcs qui sont coloriés)
+	 */
+	public int           getNbArcsColorie ( )
+	{
+		int nbArcsColorie = 0;
+		for(Arc arc : this.lstArc)
+			if(arc.getEstColorie())
+				nbArcsColorie++;
+		
+		return nbArcsColorie;
+	} 
+	
+	/* -------------------------------------- */
+	/*                 Méthode                */
+	/* -------------------------------------- */
+
+	/** Ajouter les régions visitées
+	 * @param rgn région
+	 */
+	public void ajouterRegionvisite ( int rgn ) { this.tabRegionVisite.add ( rgn ); }
+
+	/** Méthode permettant génerer les noeuds, arrêtes, régions et arc bonus grâce au fichier .data
+	 *
+	 */
 	public void genererGraphe ( )
 	{
 		try
@@ -67,7 +122,7 @@ public class GrapheT
 			sc.nextLine ( ); 
 
 			// Parcours toutes les lignes à partir de la deuxième pour faire les arêtes
-			while ( sc.hasNextLine ( ) ) 
+			do
 			{
 				line = sc.nextLine ( );
 				String[] lineSplit  = line.split ( "\t" );
@@ -85,13 +140,31 @@ public class GrapheT
 				}
 					
 			}
+			while ( !line.equals ( "[ARETES BONUS]" ) && !line.equals ( "" ) );
+
+			sc.nextLine ( ); 
+
+			// Ajoute les valeurs bonus aux arêtes
+			while ( sc.hasNextLine ( ) ) 
+			{
+				line = sc.nextLine ( );
+				String[] lineSplit  = line.split ( "\t" );
+
+				this.lstArc.get ( Integer.parseInt ( lineSplit[0] ) ).setValeur ( Integer.parseInt ( lineSplit[1] ) ) ;
+			}
 
 			sc.close ( );
 		}
-		catch ( Exception e ){ e.printStackTrace ( ); }
+		catch ( Exception e ) { e.printStackTrace ( ); }
 
 	}
+	
+	/** Méthode qui permet de colorier un arc
 
+	 * @param arc arc à colorier
+	 * @param couleur couleur souhaiter pour l'arc
+	 * @return true si on peut colorier sinon false
+	 */
 	public boolean colorier ( Arc arc, Color couleur )
 	{
 		boolean enCours = true;
@@ -104,7 +177,7 @@ public class GrapheT
 			if ( intersection ( arc, a ) && ( a.getColorArc ( ) != null ) ) enCours = false;
 
 		// On ne peut pas former un cycle
-		//if ( cyclique(arc)) enCours = false;
+		if ( cyclique(arc, couleur)) enCours = false;
 		
 		//On ne peut pas tromper mille fois une personne... Non attends.. On ne peut pas..
 		if ( !estRelie ( arc ) && !Manche.getEstPremierTour ( ) ) enCours = false; 
@@ -115,6 +188,15 @@ public class GrapheT
 			if ( Manche.getEstPremierTour ( ) )
 				Manche.setEstPremierTour ( );
 				
+			arc.getNoeudA ( ).setEstVisite ( );
+			arc.getNoeudD ( ).setEstVisite ( );
+			
+			// On ajoute les régions visitées si elles ne sont pas déjà dans la liste
+			if ( !this.tabRegionVisite.contains ( arc.getNoeudA ( ).getRegion ( ) ) )
+				this.tabRegionVisite.add (arc.getNoeudA ( ).getRegion ( ) );
+			if ( !this.tabRegionVisite.contains ( arc.getNoeudD ( ).getRegion ( ) ) )
+				this.tabRegionVisite.add ( arc.getNoeudD ( ).getRegion ( ) );
+
 			arc.setColorie ( couleur );
 			return true;
 		}
@@ -122,10 +204,12 @@ public class GrapheT
 			return false;
 
 	}
-	
-	public List<Arc>   getArcs   ( ) { return this.lstArc;    }
-	public List<Noeud> getNoeuds ( ) { return this.lstNoeuds; }
 
+	/**Méthode qui prend en paramètre deux noeud et détermine s'ils croisent un autre arc.
+	 * @param noeudDep le noeud de départ
+	 * @param noeudArr le noeud d'arrivée
+	 * @return un arc
+	 */
 	public Arc arcEntre ( Noeud noeudDep, Noeud noeudArr )
 	{
 		for ( Arc arc : this.lstArc ) {
@@ -135,6 +219,11 @@ public class GrapheT
 		return null;
 	}
 
+	/** Méthode qui retourne si deux arcs se croisent ou non
+	 * @param arcOg est l'arc sélectionner par l'utilisateur
+	 * @param arcATester est l'arc que l'on veut tester avec l'arc de l'utilisateur
+	 * @return renvoie un booléen qui indique si les deux arcs se croisent ou non
+	 */
 	public boolean intersection ( Arc arcOg, Arc arcATester )
 	{
 		Noeud depart  = arcOg.getNoeudD ( );
@@ -173,130 +262,31 @@ public class GrapheT
 		return false;
 	}
 
-	public boolean cyclique ( Arc arcPrincipal )
+	/**Retourne si l'arc forme un cycle à partir d'une couleur
+	 * @param arc arc sélectionné par l'utilisateur
+	 * @param couleur couleur que doit prendre l'arc
+	 * @return true si l'arc forme un cycle, sinon false
+	 */
+	public boolean cyclique ( Arc arc, Color couleur )
 	{
-		List<Arc> ensArcDepart;
-		List<Arc> ensArcArrivee;
+		Noeud   noeudD, noeudA;
 
-		List<Arc> ensArcAParcourir;
-
-		List<Arc> ensArcNoeudParcoursD;
-		List<Arc> ensArcNoeudParcoursA;
-		List<Arc> ensArcNoeud;
-
-		List<Integer> resArc;
+		boolean cycliqueNoeudD = false;
+		boolean cycliqueNoeudA = false;
 
 
-		Noeud noeudDepart  = arcPrincipal.getNoeudD();
-		Noeud noeudArrivee = arcPrincipal.getNoeudA();
-
-		int cpt = 0;
-
-		ensArcNoeud = new ArrayList<Arc>();
+		noeudD = arc.getNoeudD();
+		noeudA = arc.getNoeudA();
 
 
-		ensArcAParcourir = new ArrayList<Arc>();
-		
+		for (Arc a : noeudD.getLstArc() )
+			if ( a.getColorArc() == couleur ) cycliqueNoeudD = true;
 
-		ensArcDepart  = noeudDepart .getLstArc();
-		ensArcArrivee = noeudArrivee.getLstArc();
-
-
-		if ( ensArcDepart .size() <= 1 ) return false;
-		if ( ensArcArrivee.size() <= 1 ) return false;
+		for ( Arc a : noeudA.getLstArc() )
+			if ( a.getColorArc() == couleur ) cycliqueNoeudA = true;
 
 
-		for ( Arc arc : ensArcDepart )
-			ensArcAParcourir.add(arc);
-
-
-		while ( ensArcAParcourir.size() != 0 )
-		{
-			
-			for ( Arc arc : ensArcAParcourir )
-			{
-				ensArcNoeudParcoursD = arc.getNoeudA().getLstArc();
-				ensArcNoeudParcoursA = arc.getNoeudD().getLstArc();
-
-
-				for ( Arc a : ensArcNoeudParcoursD )
-					ensArcNoeud.add(a);
-
-				for ( Arc a : ensArcNoeudParcoursA )
-					ensArcNoeud.add(a);
-
-
-				resArc = this.parcoursLstArcs( arcPrincipal, arc );
-
-				for ( Integer res : resArc )
-				{
-					cpt ++;
-
-					if ( res == 1 ) return true;
-					if ( res == 0 ) ensArcAParcourir.add(ensArcNoeud.get(cpt));
-
-					ensArcAParcourir.remove(cpt); 
-				}
-
-			}
-
-		}
-
-
-		return false;
-	}
-
-
-	private List<Integer> parcoursLstArcs ( Arc arcPrincipal, Arc arcSecondaire )
-	{
-		List<Integer> ensRes;
-		List<Integer> ensTmp;
-
-
-		ensRes = new ArrayList<Integer>();
-
- 
-		/*
-			Retour :
-			0 → le cycle continue
-			1 → arc principal
-			2 → couleur différente de l'arc principal, donc, le cycle est coupé
-		*/
-
-		
-		// Parcour du graphe en partant du noeud secondaire de départ
-		ensTmp = this.parcoursGraphe( arcPrincipal, arcPrincipal.getNoeudD() );
-
-		for ( Integer i : ensTmp )
-			ensRes.add(i);
-
-
-		// Parcour du graphe en partant du noeud secondaire de départ
-		ensTmp = this.parcoursGraphe( arcPrincipal, arcPrincipal.getNoeudA() );
-
-		for ( Integer i : ensTmp )
-			ensRes.add(i);
-
-
-		return ensRes;
-	}
-
-
-	private List<Integer> parcoursGraphe ( Arc arcPrincipal, Noeud noeud )
-	{
-		List<Integer> ensRes = new ArrayList<Integer>();
-
-
-		for ( Arc arc : noeud.getLstArc() )
-		{
-			ensRes.add(0);
-
-			if ( arc == arcPrincipal )                             ensRes.add(1);
-			if ( arc.getColorArc() != arcPrincipal.getColorArc() ) ensRes.add(2);
-		}
-
-
-		return ensRes;
+		return cycliqueNoeudD && cycliqueNoeudA;
 	}
 
 }
