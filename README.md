@@ -1,4 +1,10 @@
 # SAE 2.02
+Pour cette SAE , nous devions tout d'abord imaginer la structure d'un fichier texte qu'on pouvait lire pour génerer un graphe. 
+Ensuite pour la deuxième partie, nous avons eu un fichier texte avec des noeuds, des regions et des arcs. En lisant le fichier, nous avons construit notre propre graphe.
+Sur cette SAE, j'étais principalement sur l'IHM. Un camarade dans mon groupe et moi ont fait tout l'ihm en utilisant Graphics2D et nous sommes plutôt fier de ce qu'on a fait, comme le fait qu'on peut sélectionner deux noeuds et ca devient rouge et aussi les différents choses visuels que vous pouvez voir. J'ai touché un peu à la partie métier aussi pour comprendre comment ca marche pour relier notre ihm.
+
+Nous avons fini la SAE avec un oral ou nous avons justifié nos choix.
+
 # Étape 1
 
 • La structure d’un fichier et l’algorithme qui permet de le lire et générer le graphe
